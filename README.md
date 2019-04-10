@@ -49,3 +49,21 @@ export default store();</code>
 
 *****
 
+## Changing the NODE_PATH
+
+React 프로젝트에서 import 할 때, 물리적인 파일을 참조하는 경우가 많다.
+
+참조에 사용되는 path 방식은 2가지이다.
+
+1. 절대경로(absolute)
+2. 상대경로(relative)
+
+`src/.env`에 다음과 같이 정의한 후, 개발 서버를 재시동한다.
+
+<code>NODE_PATH=src/</code>
+
+그러면 최상단의 지점이 src 하위가 되어서 절대경로를 편하게 사용할 수 있고,
+
+참조위치를 확인하기에도 편리하다.
+
+*****
