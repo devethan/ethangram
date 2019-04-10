@@ -5,7 +5,10 @@ import store from 'redux/configureStore';
 import 'index.css';
 import App from './App';
 
-// console.log(store.getState()); // Check state of reducers in store
+// store.dispatch({type: 'BULLSHIT'})
+// process.env.NODE_ENV === 'development';
+//     => middleware.push(logger)
+
 
 ReactDOM.render(
     <Provider store={store}>
