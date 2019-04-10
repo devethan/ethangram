@@ -67,3 +67,53 @@ React 프로젝트에서 import 할 때, 물리적인 파일을 참조하는 경
 참조위치를 확인하기에도 편리하다.
 
 *****
+
+## Redux Middlewares Thunk
+
+React app과 redux store 사이에는 middleware가 존재한다.
+
+이것을 구현하기 위해서 다음의 라이브러리를 설치한다.
+
+`yarn add redux-thunk`
+
+`redux-thunk`는 우리가 원할 때마다, default로 액션을 보낼 때 마다,
+
+redux store로 액션을 보낼 수 있도록 도와준다.
+
+1. Response
+2. 그에 맞는 Action sending
+3. Go to reducer & Change Resources(data)
+
+이러한 작업들을 중간에서 미들웨어인 `redux-thunk`가 한다.
+
+정리 : `redux-thunk`는 액션을 보낼 때까지 기다리고, 우리가 원할 때 액션을 전송할 수 있도록 한다.
+
+### Store에 middleware 적용
+
+<pre>
+<code>import thunk from 'redux-thunk';
+
+// Applying Middleware
+const middlewares = [thunk];
+
+let store = initialState => 
+    createStore(reducer, applyMiddleware(...middlewares));</code>
+</pre>
+
+여기서 ES6의 재밌는 기능이 나오는데, 바로 `...`, 'unpack' 이라는 기능이다.
+
+array 구조의 index에 맞는 item들을 쉽게 꺼낼 수 있도록 한다.
+
+
+<pre>
+<code>const arr = [1, 2, 3];
+console.log(arr); // [1, 2, 3]
+console.log(...arr); // 1, 2, 3</code>
+</pre>
+
+*****
+
+여기서부터는 진행 속도를 위해서 README 작성을 잠시 보류하는 걸로 하겠다.
+
+복습하게 될 때, 다시 돌아옴!
+
