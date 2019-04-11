@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { i18nState } from 'redux-i18n';
 import thunk from 'redux-thunk';
 import user from 'redux/modules/user';
-import Reactotron from 'ReactotronConfig';
+// import Reactotron from 'ReactotronConfig';
 
 // ENV
 const env = process.env.NODE_ENV;
@@ -36,7 +36,7 @@ let store;
 
 if(env === 'development') {
     store = initialState => 
-        createStore(reducer, composeWithDevTools(applyMiddleware(...middlewares), Reactotron.createEnhancer()));
+        createStore(reducer, composeWithDevTools(applyMiddleware(...middlewares)));
 } else {
     store = initialState => 
         createStore(reducer, applyMiddleware(...middlewares));
