@@ -18,28 +18,28 @@ const Auth = (props, context) => (
           switch (props.action) {
             case "login":
               return (
-                <>
-                  <p>Don't have account?</p>
+                <p>
+                    Don't have account?
                   <span
                     className={styles.changeLink}
                     onClick={() => props.changeAction()}
                   >
                     Log in
                   </span>
-                </>
+                </p>
               );
 
             default:
               return (
-                <>
-                  <p>Have an account?</p>
+                <p>
+                    Have an account?
                   <span
                     className={styles.changeLink}
                     onClick={() => props.changeAction()}
                   >
                     Sign in
                   </span>
-                </>
+                </p>
               );
           }
         })()}
