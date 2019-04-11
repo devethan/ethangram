@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import styles from "./styles.module.scss";
 import { LoginForm, SignupForm } from "components/AuthForms";
 
@@ -19,12 +20,12 @@ const Auth = (props, context) => (
             case "login":
               return (
                 <p>
-                    Don't have account?
+                    {context.t(`Don't have account?`)}
                   <span
                     className={styles.changeLink}
                     onClick={() => props.changeAction()}
                   >
-                    Log in
+                    {context.t(`Sign in`)}
                   </span>
                 </p>
               );
@@ -32,12 +33,12 @@ const Auth = (props, context) => (
             default:
               return (
                 <p>
-                    Have an account?
+                  {context.t(`Have an account?`)}
                   <span
                     className={styles.changeLink}
                     onClick={() => props.changeAction()}
                   >
-                    Sign in
+                    {context.t(`Log in`)}
                   </span>
                 </p>
               );
@@ -45,7 +46,7 @@ const Auth = (props, context) => (
         })()}
       </div>
       <div className={styles.appBox}>
-        <span>Get the app</span>
+        <span>{context.t(`Get the app`)}</span>
         <div className={styles.appStore}>
           <img src={require("images/appStore.png")} alt="App Store" />
           <img src={require("images/googlePlay.png")} alt="Google Play" />
@@ -54,5 +55,9 @@ const Auth = (props, context) => (
     </div>
   </main>
 );
+
+Auth.contextTypes = {
+  t: PropTypes.func.isRequired
+}
 
 export default Auth;
