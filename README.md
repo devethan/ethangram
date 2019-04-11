@@ -117,3 +117,8 @@ console.log(...arr); // 1, 2, 3</code>
 
 복습하게 될 때, 다시 돌아옴!
 
+*****
+
+[React Component Pattern](https://levelup.gitconnected.com/react-component-patterns-ab1f09be2c82)
+
+*****

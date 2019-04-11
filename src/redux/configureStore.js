@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { i18nState } from 'redux-i18n';
 import thunk from 'redux-thunk';
-import users from 'redux/modules/users';
+import user from 'redux/modules/user';
 import Reactotron from 'ReactotronConfig';
 
 // ENV
@@ -27,7 +27,7 @@ if(env === 'development') {
 
 // Combining reducers on Store.
 const reducer = combineReducers({
-    users,
+    user,
     router: connectRouter(history),
     i18nState,
 })

@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import Footer from 'components/Footer';
-import styles from './styles.module.scss';
+import { connect } from 'react-redux';
+import Container from './container';
 
-class App extends Component {
-  render() {
-    return (
-      <div className={styles.App}>
-        <Footer/>
-      </div>
-    );
-  }
-}
+// redux store state
+const mapStateToProps = (state, ownProps) => {
+    const { user } = state;
+    return {
+        isLoggedIn: user.isLoggedIn
+    };
+};
 
-export default App;
+// mapping state with Container
+// Store 상태값 + Presentor
+export default connect(mapStateToProps)(Container)
