@@ -122,3 +122,40 @@ console.log(...arr); // 1, 2, 3</code>
 [React Component Pattern](https://levelup.gitconnected.com/react-component-patterns-ab1f09be2c82)
 
 *****
+
+### Change `sass-loader` configuration
+
+`sass-loader` 의 구성정보 설정 변경을 통해 css-module의 import를 전역적으로 가능하게 한다.
+
+1. `yarn eject`
+2. 
+    <pre>
+    <code>// config/webpack.config.js
+    // Adds support for CSS Modules, but using SASS
+    // using the extension .module.scss or .module.sass
+    {
+        test: sassModuleRegex,
+        use: getStyleLoaders(
+        {
+            importLoaders: 2,
+            sourceMap: isEnvProduction && shouldUseSourceMap,
+            modules: true,
+            getLocalIdent: getCSSModuleLocalIdent,
+        }).concat({     // 이 부분 변경/추가!
+            loader: require.resolve('sass-loader'),
+            options: {
+            // Setting global variable
+            data: `@import "${paths.appSrc}/config/_variables.scss";`,
+            includePaths: [paths.appSrc + '/config']
+            }
+        })
+    },</code>
+    </pre>
+
+[Ejecting from CRA Update 2](https://www.youtube.com/watch?v=rZOduIgjKYI&feature=youtu.be)
+
+[CSS Module과 Sass를 함께 사용하며 sass-loader 설정 커스터마이징](https://velog.io/@dever/CSS-Module%EA%B3%BC-Sass%EB%A5%BC-%ED%95%A8%EA%BB%98-%EC%82%AC%EC%9A%A9%ED%95%98%EB%A9%B0-sass-loader-%EC%84%A4%EC%A0%95-%EC%BB%A4%EC%8A%A4%ED%84%B0%EB%A7%88%EC%9D%B4%EC%A7%95-mpjoa307pt)
+
+
+
+*****
