@@ -156,6 +156,61 @@ console.log(...arr); // 1, 2, 3</code>
 
 [CSS Module과 Sass를 함께 사용하며 sass-loader 설정 커스터마이징](https://velog.io/@dever/CSS-Module%EA%B3%BC-Sass%EB%A5%BC-%ED%95%A8%EA%BB%98-%EC%82%AC%EC%9A%A9%ED%95%98%EB%A9%B0-sass-loader-%EC%84%A4%EC%A0%95-%EC%BB%A4%EC%8A%A4%ED%84%B0%EB%A7%88%EC%9D%B4%EC%A7%95-mpjoa307pt)
 
-
-
 *****
+
+### Apply i18n Context
+
+> `i18n`(internationalization) 모듈을 통해 흔히 언어팩이라는 것을 적용해볼까
+
+1.  
+    <pre>// translations.js
+    <code>export const translations = {
+        ko: {
+            "Log in": "로그인",
+            "About us": "Instagram 정보",
+            "Support": "지원",
+            "Press": "홍보 센터",
+            "API": "",
+            "Jobs": "채용 정보",
+            "Privacy": "개인정보처리방침",
+            "Terms": "약관",
+            "Directory": "디렉터리",
+            "Language": "언어",
+        }
+    };</code><pre>
+
+2.  <pre>// configureStore.js
+    <code>import { i18nState } from 'redux-i18n';
+    
+    const reducer = combineReducers({
+        user,
+        router: connectRouter(history),
+        i18nState,  // add
+    })</code><pre>
+
+3.  <pre>// components/Footer/index.js
+    <code>import PropTypes from 'prop-types';
+    
+    class index extends React.Component {
+        static contextTypes = {
+            t: PropTypes.func.isRequired
+        }
+        render() {
+            const { props, context } = this;
+            const { t } = context;
+            retrun (
+                --> t('About us')
+            );
+        }
+    }</code><pre>
+
+4.  <pre>// components/Footer/index.js - Stateless Functional Component
+    <code>import PropTypes from 'prop-types';
+    
+    const Footer = (props, context) => (
+        t('About us')
+    )
+
+    Footer.contextTypes = {
+        t: PropTypes.func.isRequired
+    }</code><pre>
