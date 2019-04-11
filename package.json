@@ -45,6 +45,7 @@
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
     "react-dom": "^16.8.6",
+    "react-ionicons": "^3.0.1",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^4.0.8",
