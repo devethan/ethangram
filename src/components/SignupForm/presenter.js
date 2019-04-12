@@ -13,30 +13,42 @@ const SignupForm = (props, context) => (
       Facebook
     </button>
     <span className={formStyles.divider}>or</span>
-    <form className={formStyles.form}>
+    <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
         type="email"
         placeholder="Email"
         className={formStyles.textInput}
         autoComplete="none"
+        name="email"
+        value={props.emailValue}
+        onChange={props.handleChange}
       />
       <input
         type="text"
         placeholder="Full Name"
         className={formStyles.textInput}
         autoComplete="none"
+        name="fullname"
+        value={props.fullnameValue}
+        onChange={props.handleChange}
       />
       <input
         type="username"
         placeholder="Username"
         className={formStyles.textInput}
         autoComplete="none"
+        name="username"
+        value={props.usernameValue}
+        onChange={props.handleChange}
       />
       <input
         type="password"
         placeholder="Password"
         className={formStyles.textInput}
         autoComplete="none"
+        name="password"
+        value={props.passwordValue}
+        onChange={props.handleChange}
       />
       <input type="submit" value="Sign up" className={formStyles.button} />
     </form>

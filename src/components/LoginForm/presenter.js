@@ -5,17 +5,24 @@ import formStyles from "shared/formStyles.module.scss";
 
 const LoginForm = (props, context) => (
   <div className={formStyles.formComponent}>
-    <form className={formStyles.form}>
+    <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
         type="text"
         placeholder={context.t("Username")}
         className={formStyles.textInput}
-        autoComplete="none"
+        autoComplete="off"
+        name="username"
+        value={props.usernameValue}
+        onChange={props.handleChange}
       />
       <input
         type="password"
         placeholder={context.t("Password")}
         className={formStyles.textInput}
+        autoComplete="off"
+        name="password"
+        value={props.passwordValue}
+        onChange={props.handleChange}
       />
       <input
         type="submit"
