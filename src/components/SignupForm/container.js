@@ -19,6 +19,7 @@ class Container extends React.Component {
         passwordValue={password}
         handleChange={this._handleChange}
         handleSubmit={this._handleSubmit}
+        handleFacebookLogin={this._handleFacebookLogin}
       />
     );
   }
@@ -32,6 +33,10 @@ class Container extends React.Component {
   _handleSubmit = e => {
       e.preventDefault();
       console.log(this.state)
+  }
+
+  _handleFacebookLogin = response => {
+    console.log(response);
   }
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Ionicon from "react-ionicons/lib/LogoFacebook";
+import FacebookLogin from "react-facebook-login";
 import formStyles from "shared/formStyles.module.scss";
 
 const SignupForm = (props, context) => (
@@ -8,17 +8,22 @@ const SignupForm = (props, context) => (
     <h3 className={formStyles.signupHeader}>
       Sign up to see photos and videos from your friends.
     </h3>
-    <button className={formStyles.button}>
-      <Ionicon icon="logo-facebook" fontSize="20px" color="white" /> Log in with
-      Facebook
-    </button>
+    <FacebookLogin
+        appId="597955817358263"
+        autoLoad={true}
+        fields="name,email,picture"
+        callback={props.handleFacebookLogin}
+        cssClass={formStyles.facebookLink}
+        icon="fa-facebook-official"
+        textButton={context.t('Log in with Facebook')}
+    />
     <span className={formStyles.divider}>or</span>
     <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
         type="email"
         placeholder="Email"
         className={formStyles.textInput}
-        autoComplete="none"
+        autoComplete="off"
         name="email"
         value={props.emailValue}
         onChange={props.handleChange}
@@ -27,7 +32,7 @@ const SignupForm = (props, context) => (
         type="text"
         placeholder="Full Name"
         className={formStyles.textInput}
-        autoComplete="none"
+        autoComplete="off"
         name="fullname"
         value={props.fullnameValue}
         onChange={props.handleChange}
@@ -36,7 +41,7 @@ const SignupForm = (props, context) => (
         type="username"
         placeholder="Username"
         className={formStyles.textInput}
-        autoComplete="none"
+        autoComplete="off"
         name="username"
         value={props.usernameValue}
         onChange={props.handleChange}
@@ -45,7 +50,7 @@ const SignupForm = (props, context) => (
         type="password"
         placeholder="Password"
         className={formStyles.textInput}
-        autoComplete="none"
+        autoComplete="off"
         name="password"
         value={props.passwordValue}
         onChange={props.handleChange}
@@ -58,6 +63,16 @@ const SignupForm = (props, context) => (
     </p>
   </div>
 );
+
+SignupForm.propTypes = {
+  emailValue: PropTypes.string.isRequired,
+  fullnameValue: PropTypes.string.isRequired,
+  usernameValue: PropTypes.string.isRequired,
+  passwordValue: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleFacebookLogin: PropTypes.func.isRequired,
+}
 
 SignupForm.contextTypes = {
   t: PropTypes.func.isRequired
