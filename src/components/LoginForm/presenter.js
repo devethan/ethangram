@@ -17,6 +17,15 @@ const LoginForm = (props, context) => (
         onChange={props.handleChange}
       />
       <input
+        type="email"
+        placeholder={context.t("Email")}
+        className={formStyles.textInput}
+        autoComplete="off"
+        name="email"
+        value={props.emailValue}
+        onChange={props.handleChange}
+      />
+      <input
         type="password"
         placeholder={context.t("Password")}
         className={formStyles.textInput}
@@ -35,7 +44,7 @@ const LoginForm = (props, context) => (
     <span className={formStyles.facebookLink}>
       <FacebookLogin
         appId="597955817358263"
-        autoLoad={true}
+        autoLoad={false}
         fields="name,email,picture"
         callback={props.handleFacebookLogin}
         cssClass={formStyles.facebookLink}
@@ -51,6 +60,7 @@ const LoginForm = (props, context) => (
 
 LoginForm.propTypes = {
   usernameValue: PropTypes.string.isRequired,
+  emailValue: PropTypes.string.isRequired,
   passwordValue: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

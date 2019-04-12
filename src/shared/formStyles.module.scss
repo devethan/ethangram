@@ -1,111 +1,116 @@
 .formComponent {
-    margin-top: 15px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  .form {
     display: flex;
     flex-direction: column;
+    input[type="submit"] {
+      margin-top: 10px;
+    }
+    .textInput {
+      border: 1px solid #e6e6e6;
+      border-radius: 3px;
+      background-color: $bg-color;
+      margin-bottom: 5px;
+      font-size: $small-font-size;
+      font-weight: 400;
+      padding: 9px 0 7px 8px;
+      &:focus {
+        outline: none;
+        border: 1px solid #b2b2b2;
+      }
+    }
+  }
+  .divider {
+    text-transform: uppercase;
+    color: $dark-gray;
+    font-weight: 600;
+    margin: 20px 0;
+    margin-bottom: 20px;
+    position: relative;
+    &:before {
+      content: "";
+      width: 42%;
+      position: absolute;
+      background-color: $dark-gray;
+      height: 1px;
+      left: 0;
+      top: 6px;
+      opacity: 0.8;
+    }
+    &:after {
+      content: "";
+      width: 42%;
+      position: absolute;
+      background-color: $dark-gray;
+      height: 1px;
+      right: 0;
+      top: 6px;
+      opacity: 0.8;
+    }
+  }
+  .facebookLink {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    border: none;
+    color: #385185;
+    background-color: white;
+    margin-bottom: 7px;
+    font-size: $normal-font-size;
+    font-weight: 600;
+    cursor: pointer;
+    i {
+      margin-right: 5px;
+    }
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+  .forgotLink {
+    font-size: $normal-font-size;
+    font-weight: 600;
+    color: #3897f0;
+    cursor: pointer;
+  }
+  .button {
+    width: 100%;
+    @include blueButton();
+    i {
+      font-size: 18px;
+      margin-right: 5px;
+    }
+    svg {
+      margin-right: 10px;
+    }
+  }
+  .signupHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $dark-gray;
+    font-weight: 600;
+    font-size: 17px;
     margin-bottom: 25px;
-    .form {
-        display: flex;
-        flex-direction: column;
-        input[type="submit"] {
-            margin-top: 10px;
-        }
-        .textInput {
-            border: 1px solid #e6e6e6;
-            border-radius: 3px;
-            background-color: $bg-color;
-            margin-bottom: 5px;
-            font-size: $small-font-size;
-            font-weight: 400;
-            padding: 9px 0 7px 8px;
-            &:focus {
-                outline: none;
-                border: 1px solid #b2b2b2;
-            }
-        }
+    svg {
+      margin-right: 5px;
     }
-    .divider {
-        text-transform: uppercase;
-        color: $dark-gray;
-        font-weight: 600;
-        margin: 20px 0;
-        margin-bottom: 20px;
-        position: relative;
-        &:before {
-            content: "";
-            width: 42%;
-            position: absolute;
-            background-color: $dark-gray;
-            height: 1px;
-            left: 0;
-            top: 6px;
-            opacity: .8;
-        }
-        &:after {
-            content: "";
-            width: 42%;
-            position: absolute;
-            background-color: $dark-gray;
-            height: 1px;
-            right: 0;
-            top: 6px;
-            opacity: .8;
-        }
+  }
+  .terms {
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 20px;
+    line-height: 17px;
+    color: $dark-gray;
+    font-size: $normal-font-size;
+    display: flex;
+    flex-direction: column;
+    span {
+      font-weight: 600;
+      cursor: pointer;
     }
-    .facebookLink {
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        border: none;
-        color: #385185;
-        background-color: white;
-        margin-bottom: 7px;
-        font-size: $normal-font-size;
-        font-weight: 600;
-        cursor: pointer;
-        i {
-            margin-right: 5px;
-        }
-        &:focus,
-        &:active {
-            outline: none;
-        }
-    }
-    .forgotLink {
-        font-size: $normal-font-size;
-        font-weight: 600;
-        color: #3897f0;
-        cursor: pointer;
-    }
-    .button {
-        @include blueButton();
-        svg {
-            margin-right: 10px;
-        }
-    }
-    .signupHeader {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: $dark-gray;
-        font-weight: 600;
-        font-size: 17px;
-        margin-bottom: 25px;
-        svg {
-            margin-right: 5px;
-        }
-    }
-    .terms {
-        width: 85%;
-        margin: 0 auto;
-        margin-top: 20px;
-        line-height: 17px;
-        color: $dark-gray;
-        font-size: $normal-font-size;
-        display: flex;
-        flex-direction: column;
-        span {
-            font-weight: 600;
-            cursor: pointer;
-        }
-    }
+  }
 }
