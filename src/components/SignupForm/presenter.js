@@ -9,7 +9,7 @@ const SignupForm = (props, context) => (
       Sign up to see photos and videos from your friends.
     </h3>
     <FacebookLogin
-      appId="597955817358263"
+      appId="395965194524482"
       autoLoad={false}
       fields="name,email,picture"
       callback={props.handleFacebookLogin}
