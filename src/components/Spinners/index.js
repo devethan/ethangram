@@ -6,11 +6,8 @@ import { HashLoader } from 'react-spinners';
 // import ClipLoader from 'react-spinners/ClipLoader';
  
 const override = css`
-    display: flex;
-    justify-items: center;
-    align-content: center;
-    margin: 0 auto;
     margin-top: 30px;
+    margin-bottom: 30px;
 `;
  
 class AwesomeComponent extends React.Component {
