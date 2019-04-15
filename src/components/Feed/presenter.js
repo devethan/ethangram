@@ -1,28 +1,30 @@
-import React from 'react';
-import PropsType from 'prop-types';
-import styles from './styles.module.scss';
-import Spinner from 'components/Spinners';
+import React from "react";
+import PropsType from "prop-types";
+import styles from "./styles.module.scss";
+import Spinner from "components/Spinners";
 
 const Feed = (props, context) => {
-    if(props.loading) {
-        return <LoadingFeed />
-    } else {
-        return <LoadedFeed />
-    }
-}
+  if (props.loading) {
+    return <LoadingFeed />;
+  } else {
+    return <RenderFeed {...props} />;
+  }
+};
 
 Feed.PropsTypes = {
-    loading: PropsType.bool.isRequired,
-}
+  loading: PropsType.bool.isRequired
+};
 Feed.ContextTypes = {
-    t: PropsType.func.isRequired,
-}
+  t: PropsType.func.isRequired
+};
 
 const LoadingFeed = props => (
-    <div className={styles.feed}>
-        <Spinner />
-    </div>
+  <div className={styles.feed}>
+    <Spinner />
+  </div>
 );
-const LoadedFeed = props => "Loaded";
+const RenderFeed = props => {
+    return <div className={styles.feed}>{props.feed.data.map(post => console.log(post))}</div>
+};
 
 export default Feed;
