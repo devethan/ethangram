@@ -1,0 +1,52 @@
+.root {
+  display: flex;
+  justify-content: center;
+  min-height: 75px;
+  width: 100%;
+  background-color: white;
+  @include boxBorder(no);
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: $max-page-width;
+    width: 100%;
+    .column {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 33%;
+      &:first-child {
+        justify-content: flex-start;
+      }
+      &:last-child {
+        justify-content: flex-end;
+      }
+      img {
+        max-width: 125px;
+      }
+      input {
+        width: 215px;
+        height: 30px;
+        text-align: center;
+        font-size: $normal-font-size;
+        font-weight: 300;
+        background-color: $bg-color;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        &:focus,
+        &:active {
+            outline: none;
+            background-color: white;
+        }
+        &::placeholder {
+            color: $dark-gray;
+        }
+      }
+      .item {
+          cursor: pointer;
+          margin: 0 15px;
+      }
+    }
+  }
+}

@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from 'prop-types'
 import { Route, Switch } from 'react-router-dom';
 import './styles.module.scss';
+import Navigation from 'components/Navigation';
 import Auth from 'components/Auth';
 import Footer from 'components/Footer';
 
 // Array type으로도 Component 표현 가능
 const App = props => [
-  // Nav,
-  // Route,
+  props.isLoggedIn ? <Navigation key={1} /> : null,
   props.isLoggedIn ? <PrivateRoutes key={2} /> : <PublicRoutes key={2} />,
   <Footer key={3} />
 ];
