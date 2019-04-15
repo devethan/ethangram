@@ -5,6 +5,7 @@ const { api } = require('config/url.json');
 // actions
 
 const SAVE_TOKEN = "SAVE_TOKEN";
+const LOGOUT = "LOGOUT";
 
 // action creator
 
@@ -13,6 +14,12 @@ function saveToken(token) {
     type: SAVE_TOKEN,
     token
   };
+}
+
+function logout() {
+  return {
+    type: LOGOUT
+  }
 }
 
 // API Actions
@@ -43,7 +50,9 @@ const facebookLogin = access_token => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(access_token)
+      body: JSON.stringify({
+        "access_token": access_token,
+      })
     })
       .then(response => response.json())
       .then(json => {
@@ -90,7 +99,8 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case SAVE_TOKEN:
       return applySetToken(state, action);
-
+    case LOGOUT:
+      return applyLogout(state, action);
     default:
       return state;
   }
@@ -108,11 +118,19 @@ function applySetToken(state, action) {
   };
 }
 
+function applyLogout(state, action) {
+  localStorage.removeItem('jwt');
+  return {
+    isLoggedIn: false
+  }
+}
+
 // exports
 const actionCreators = {
   facebookLogin,
   generalResistration,
-  generalLogin
+  generalLogin,
+  logout,
 };
 
 export { actionCreators };

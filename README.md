@@ -214,3 +214,11 @@ console.log(...arr); // 1, 2, 3</code>
     Footer.contextTypes = {
         t: PropTypes.func.isRequired
     }</code><pre>
+
+*****
+
+## Logout
+1. 서버사이드 처리 : 올바르지 않은 토큰 값 받으면 401 에러 코드 response
+2. API fetch 단계에서 `response.status === 401` 이면 로그아웃 실행
+
+--> 백엔드가 아직 준비되지 않아서 스킵함. ( 04 / 15 )
