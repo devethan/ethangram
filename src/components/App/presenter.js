@@ -5,6 +5,7 @@ import './styles.module.scss';
 import Navigation from 'components/Navigation';
 import Auth from 'components/Auth';
 import Footer from 'components/Footer';
+import Feed from 'components/Feed';
 
 // Array type으로도 Component 표현 가능
 const App = props => [
@@ -20,7 +21,7 @@ App.propTypes = {
 // Login token 값에 따라서 각각 다른 Router 호출
 const PrivateRoutes = props => (
   <Switch>
-    <Route exact path="/" render={()=>'feed'} />
+    <Route exact path="/" component={Feed} />
     <Route path="/explore" render={()=>'explore'} />
   </Switch>
 );
