@@ -26,6 +26,9 @@
         max-width: 125px;
       }
       input {
+        @include breakpoint('phone') {
+          display: none;
+        }
         width: 215px;
         height: 30px;
         text-align: center;

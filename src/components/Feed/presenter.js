@@ -1,7 +1,8 @@
 import React from "react";
 import PropsType from "prop-types";
 import styles from "./styles.module.scss";
-import Spinner from "components/Spinners";
+import FeedPhoto from "components/FeedPhoto";
+import Loading from "components/Spinners";
 
 const Feed = (props, context) => {
   if (props.loading) {
@@ -11,20 +12,25 @@ const Feed = (props, context) => {
   }
 };
 
-Feed.PropsTypes = {
-  loading: PropsType.bool.isRequired
-};
-Feed.ContextTypes = {
-  t: PropsType.func.isRequired
-};
-
 const LoadingFeed = props => (
   <div className={styles.feed}>
-    <Spinner />
+    <Loading />
   </div>
 );
 const RenderFeed = props => {
-    return <div className={styles.feed}>{props.feed.data.map(post => console.log(post))}</div>
+  return (
+    <div className={styles.feed}>
+      {props.feed.map(photo => (
+        <FeedPhoto key={photo.id} photo={photo} />
+      ))}
+      {console.log(props)}
+    </div>
+  );
+};
+
+Feed.PropsTypes = {
+  loading: PropsType.bool.isRequired,
+  feed: PropsType.array
 };
 
 export default Feed;

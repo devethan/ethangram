@@ -26,7 +26,7 @@ function logout() {
 // 일반 로그인
 const generalLogin = data => {
   return dispatch => {
-    fetch(`${api}/users/rest_auth/login/`, {
+    fetch(`${api}/users/rest-auth/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -45,7 +45,7 @@ const generalLogin = data => {
 // 일반 가입
 const facebookLogin = access_token => {
   return dispatch => {
-    fetch(`${api}/users/rest_auth/facebook/`, {
+    fetch(`${api}/users/login/facebook/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
