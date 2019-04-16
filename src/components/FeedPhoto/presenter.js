@@ -49,7 +49,7 @@ const FeedPhoto = (props, context) => {
         <PhotoActions number={like_count} />
         <PhotoComments caption={caption} creator={username} comments={comments} />
         <TimeStamp time={natural_time}/>
-        {/* <CommentBox photoId={id}/> */}
+        <CommentBox photoId={id}/>
       </div>
     </div>
   );
