@@ -8,15 +8,31 @@ const { api } = require('config/url.json');
 // actions
 
 const SET_FEED = 'SET_FEED';
+const LIKE_PHOTO = 'LIKE_PHOTO';
+const UNLIKE_PHOTO = 'UNLIKE_PHOTO';
 
 
 // action creators
 
 
-const setFeed = (feed) => {
+function setFeed(feed) {
   return {
     type: SET_FEED,
     feed
+  } 
+}
+
+function doLikePhoto(photoId) {
+  return {
+    type: LIKE_PHOTO,
+    photoId
+  } 
+}
+
+function doUnLikePhoto(photoId) {
+  return {
+    type: UNLIKE_PHOTO,
+    photoId
   } 
 }
 
@@ -42,6 +58,13 @@ const getFeeds = () => {
   }
 }
 
+function likePhoto(photoId) {
+  return (dispatch, getState) => {
+    dispatch(doLikePhoto(photoId));
+    // fetch(`${api}/images`)
+  }
+}
+
 
 // initial state
 
@@ -53,6 +76,10 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_FEED:
       return applySetFeed(state, action);
+    case LIKE_PHOTO:
+      return applyDoLikePhoto(state, action);
+    case UNLIKE_PHOTO:
+      return applyDoUnLikePhoto(state, action);
     default:
       return state;
   }
@@ -68,9 +95,35 @@ function applySetFeed(state, action) {
   }
 }
 
+function applyDoLikePhoto(state, action) {
+  const { photoId } = action;
+  const { feed } = state;
+  const updatedFeed = feed.map(photo => {
+    if( photo.id === photoId ) {
+      return {...photo, is_liked: true, like_count: photo.like_count+1}
+    }
+    return photo;
+  });
+  return {...state, feed: updatedFeed};
+}
+
+function applyDoUnLikePhoto(state, action) {
+  const { photoId } = action;
+  const { feed } = state;
+  const updatedFeed = feed.map(photo => {
+    if( photo.id === photoId ) {
+      return {...photo, is_liked: false, like_count: photo.like_count-1}
+    }
+    return photo;
+  });
+  return {...state, feed: updatedFeed};
+}
+
+
 // exports
 const actionCreators = {
-  getFeeds
+  getFeeds,
+  likePhoto
 };
 
 export { actionCreators };
