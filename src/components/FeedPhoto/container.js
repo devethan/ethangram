@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import FeedPhoto from './presenter';
 
-class Container extends React.Component {
-    render() {
-        return <FeedPhoto {...this.props} />
-    }
-} 
+const Container = props => {
+    return (
+        <FeedPhoto {...props} />
+    );
+}
 
 export default Container;

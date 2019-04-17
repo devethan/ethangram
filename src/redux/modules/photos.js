@@ -39,10 +39,9 @@ function doUnLikePhoto(photoId) {
 // api actions
 
 
-const getFeeds = () => {
+function getFeeds () {
   return (dispatch, getState) => {
     const { user: {token} } = getState();
-    console.log(token)
     fetch(`${api}/images/`, {
       method: 'GET',
       headers: {
@@ -52,7 +51,6 @@ const getFeeds = () => {
     .then(response => response.json())
     .then(json => {
       dispatch(setFeed(json))
-      console.log(json)
     })
     .catch(error => console.error(error));
   }
@@ -61,7 +59,41 @@ const getFeeds = () => {
 function likePhoto(photoId) {
   return (dispatch, getState) => {
     dispatch(doLikePhoto(photoId));
-    // fetch(`${api}/images`)
+    const { user: { token } } = getState();
+    fetch(`${api}/images/${photoId}/likes/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+    .then(res => {
+      if(res.status === 401) {
+        // dispatch(userAction.logout())
+      } else if (!res.ok) {
+        dispatch(doUnLikePhoto(photoId))
+      }
+    })
+    .catch(err=>console.error(err));
+  }
+}
+
+function unLikePhoto(photoId) {
+  return (dispatch, getState) => {
+    dispatch(doUnLikePhoto(photoId));
+    const { user: { token } } = getState();
+    fetch(`${api}/images/${photoId}/unlikes/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+    .then(res => {
+      if(res.status === 401) {
+        // dispatch(userAction.logout())
+      } else if (!res.ok) {
+        dispatch(doLikePhoto(photoId))
+      }
+    });
   }
 }
 
@@ -123,7 +155,8 @@ function applyDoUnLikePhoto(state, action) {
 // exports
 const actionCreators = {
   getFeeds,
-  likePhoto
+  likePhoto,
+  unLikePhoto
 };
 
 export { actionCreators };

@@ -8,7 +8,7 @@ class Container extends React.Component {
   };
   static propTypes = {
     getFeeds: PropTypes.func.isRequired,
-    feed: PropTypes.object
+    feed: PropTypes.array
   };
   render() {
     const { feed } = this.props;

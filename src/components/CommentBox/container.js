@@ -3,7 +3,7 @@ import CommentBox from './presenter';
 
 class Container extends React.Component {
     render() {
-        return <CommentBox />;
+        return <CommentBox {...this.props} />;
     }
 }
 

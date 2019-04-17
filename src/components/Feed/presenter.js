@@ -23,7 +23,6 @@ const RenderFeed = props => {
       {props.feed.map(photo => (
         <FeedPhoto key={photo.id} photo={photo} />
       ))}
-      {console.log(props)}
     </div>
   );
 };
