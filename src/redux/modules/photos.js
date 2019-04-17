@@ -10,6 +10,7 @@ const { api } = require('config/url.json');
 const SET_FEED = 'SET_FEED';
 const LIKE_PHOTO = 'LIKE_PHOTO';
 const UNLIKE_PHOTO = 'UNLIKE_PHOTO';
+const ADD_COMMENT = 'ADD_COMMENT';
 
 
 // action creators
@@ -34,6 +35,14 @@ function doUnLikePhoto(photoId) {
     type: UNLIKE_PHOTO,
     photoId
   } 
+}
+
+function addComment(photoId, comment) {
+  return {
+    type: ADD_COMMENT,
+    photoId,
+    comment
+  }
 }
 
 // api actions
@@ -97,6 +106,34 @@ function unLikePhoto(photoId) {
   }
 }
 
+function commentPhoto(photoId, message) {
+  return (dispatch, getState) => {
+    const { user: { token } } = getState();
+    fetch(`${api}/images/${photoId}/comments/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `JWT ${token}`,
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({
+        message
+      })
+    })
+    .then(res => {
+      // console.log(res)
+      if(res.status === 401) {
+        // dispatch(userActions.logout());
+      }
+      return res.json()
+    })
+    .then(json => {
+      if(json.message) {
+        dispatch(addComment(photoId, json))
+      }
+    })
+  }
+}
+
 
 // initial state
 
@@ -112,6 +149,8 @@ function reducer(state = initialState, action) {
       return applyDoLikePhoto(state, action);
     case UNLIKE_PHOTO:
       return applyDoUnLikePhoto(state, action);
+    case ADD_COMMENT:
+      return applyAddComment(state, action);
     default:
       return state;
   }
@@ -151,12 +190,27 @@ function applyDoUnLikePhoto(state, action) {
   return {...state, feed: updatedFeed};
 }
 
+function applyAddComment(state, action) {
+  const { photoId, comment } = action;
+  const { feed } = state;
+  const updatedFeed = feed.map(photo => {
+    if( photo.id === photoId ) {
+      return {
+        ...photo,
+        comments: [...photo.comments, comment]
+      }
+    }
+    return photo;
+  });
+  return {...state, feed: updatedFeed};
+}
 
 // exports
 const actionCreators = {
   getFeeds,
   likePhoto,
-  unLikePhoto
+  unLikePhoto,
+  commentPhoto
 };
 
 export { actionCreators };
