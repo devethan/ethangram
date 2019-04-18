@@ -6,6 +6,7 @@ const { api } = require('config/url.json');
 
 const SAVE_TOKEN = "SAVE_TOKEN";
 const LOGOUT = "LOGOUT";
+const SET_USER_LIST = "SET_USER_LIST";
 
 // action creator
 
@@ -19,6 +20,13 @@ function saveToken(token) {
 function logout() {
   return {
     type: LOGOUT
+  }
+}
+
+function setUserList(userList) {
+  return {
+    type: SET_USER_LIST,
+    userList
   }
 }
 
@@ -84,6 +92,27 @@ const generalResistration = data => {
   };
 };
 
+function getPhotoLikes(photoId) {
+  return (dispatch, getState) => {
+    const { user: { token } } = getState();
+    fetch(`${api}/images/${photoId}/likes/`, {
+      method: 'GET',
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+    .then(res => {
+      if(res.status === 401) {
+        // dispatch(logout());
+      }
+      return res.json();
+    })
+    .then(json => {
+      dispatch(setUserList(json));
+    })
+  }
+}
+
 // action creator
 
 // init state
@@ -101,6 +130,8 @@ function reducer(state = initialState, action) {
       return applySetToken(state, action);
     case LOGOUT:
       return applyLogout(state, action);
+    case SET_USER_LIST:
+      return applySetUserList(state, action);
     default:
       return state;
   }
@@ -125,12 +156,21 @@ function applyLogout(state, action) {
   }
 }
 
+function applySetUserList(state, action) {
+  const { userList } = action;
+  return {
+    ...state,
+    userList
+  }
+}
+
 // exports
 const actionCreators = {
   facebookLogin,
   generalResistration,
   generalLogin,
   logout,
+  getPhotoLikes
 };
 
 export { actionCreators };
