@@ -7,6 +7,8 @@ const { api } = require('config/url.json');
 const SAVE_TOKEN = "SAVE_TOKEN";
 const LOGOUT = "LOGOUT";
 const SET_USER_LIST = "SET_USER_LIST";
+const SET_FOLLOW_USER = "SET_FOLLOW_USER";
+const SET_UNFOLLOW_USER = "SET_UNFOLLOW_USER";
 
 // action creator
 
@@ -30,9 +32,25 @@ function setUserList(userList) {
   }
 }
 
+function setFollowUser(userId) {
+  return {
+    type: SET_FOLLOW_USER,
+    userId
+  }
+}
+
+function setUnFollowUser(userId) {
+  return {
+    type: SET_UNFOLLOW_USER,
+    userId
+  }
+}
+
+
+
 // API Actions
 // 일반 로그인
-const generalLogin = data => {
+function generalLogin(data) {
   return dispatch => {
     fetch(`${api}/rest-auth/login/`, {
       method: "POST",
@@ -51,7 +69,7 @@ const generalLogin = data => {
   };
 };
 // 일반 가입
-const facebookLogin = access_token => {
+function facebookLogin(access_token) {
   return dispatch => {
     fetch(`${api}/users/login/facebook/`, {
       method: "POST",
@@ -73,7 +91,7 @@ const facebookLogin = access_token => {
 };
 
 // 페이스북 가입
-const generalResistration = data => {
+function generalResistration(data) {
   return dispatch => {
     fetch(`${api}/users/login/registration/`, {
       method: "POST",
@@ -113,6 +131,47 @@ function getPhotoLikes(photoId) {
   }
 }
 
+function followUser(userId) {
+  return (dispatch, getState) => {
+    const {user:{token}} = getState();
+    dispatch(setFollowUser(userId))
+    fetch(`${api}/users/${userId}/follow/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+    .then(res => {
+      if(res.status === 401) {
+        // dispatch(logout())
+      } else if (!res.ok) {
+        dispatch(setUnFollowUser(userId))
+      }
+    })
+  }
+}
+
+function unFollowUser(userId) {
+  return (dispatch, getState) => {
+    const {user:{token}} = getState();
+    dispatch(setFollowUser(userId))
+    fetch(`${api}/users/${userId}/unfollow/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+    .then(res => {
+      if(res.status === 401) {
+        // dispatch(logout())
+      } else if (!res.ok) {
+        dispatch(setFollowUser(userId))
+      }
+    })
+  }
+}
+
+
 // action creator
 
 // init state
@@ -132,6 +191,10 @@ function reducer(state = initialState, action) {
       return applyLogout(state, action);
     case SET_USER_LIST:
       return applySetUserList(state, action);
+    case SET_FOLLOW_USER:
+      return applySetFollowUser(state, action);
+    case SET_UNFOLLOW_USER:
+      return applySetUnFollowUser(state, action);
     default:
       return state;
   }
@@ -164,13 +227,46 @@ function applySetUserList(state, action) {
   }
 }
 
+
+function applySetFollowUser(state, action) {
+  const { userId } = action;
+  const { userList } = state;
+  const updatedUserList = userList.map(user => {
+    if( user.id === userId ) {
+      return {
+        ...user,
+        following: true
+      }
+    }
+    return user;
+  });
+  return {...state, userList: updatedUserList};
+}
+
+function applySetUnFollowUser(state, action) {
+  const { userId } = action;
+  const { userList } = state;
+  const updatedUserList = userList.map(user => {
+    if( user.id === userId ) {
+      return {
+        ...user,
+        following: false
+      }
+    }
+    return user;
+  });
+  return {...state, userList: updatedUserList};
+}
+
 // exports
 const actionCreators = {
   facebookLogin,
   generalResistration,
   generalLogin,
   logout,
-  getPhotoLikes
+  getPhotoLikes,
+  followUser,
+  unFollowUser
 };
 
 export { actionCreators };

@@ -4,8 +4,10 @@ import Close from "react-ionicons/lib/MdClose";
 import Loader from "components/Spinners";
 import styles from "./styles.module.scss";
 
-const UserList = (props, context) => (
-  <div className={styles.container}>
+const UserList = (props, context) => {
+  console.log(props);
+  return (
+    <div className={styles.container}>
     <div className={styles.box}>
       <header className={styles.header}>
         <h4 className={styles.title}>{props.title}</h4>
@@ -14,30 +16,63 @@ const UserList = (props, context) => (
         </span>
       </header>
       <div className={styles.content}>
-        {props.loading ? <div className={styles.loading}><Loader /></div> : <RenderUsers list={props.userList} />}
+        {props.loading ? (
+          <div className={styles.loading}>
+            <Loader />
+          </div>
+        ) : (
+          <RenderUsers
+            list={props.userList}
+            handleFollowClick={props.handleFollowClick}
+          />
+        )}
         {/* {props.loading ? <Loader /> : "UserList shown" && console.log(props.userList)} */}
       </div>
     </div>
   </div>
-);
+  );
+};
 
-const RenderUsers = props => (
+const RenderUsers = props =>
   props.list.map(user => (
-    <UserDisplay horizontal={true} user={user} key={user.id} />
-  ))
-)
+    <UserDisplay
+      horizontal={true}
+      user={user}
+      key={user.id}
+      handleFollowClick={props.handleFollowClick}
+    />
+  ));
 
 const UserDisplay = (props, context) => {
-  const {user: {profile_image, username}, id} = props;
-  const { api } = require('config/url.json');
+  const { user: { id, profile_image, username, name, following }} = props;
   return (
     <div className={styles.userDisplay}>
-      <img src={profile_image ? api + profile_image : require('images/noPhoto.jpg')} />
-      <span className={styles.username}>{username}</span>
-      <span className={styles.follow}>{context.t('Follow')}</span>
+      <img
+        src={profile_image ? profile_image : require("images/noPhoto.jpg")}
+      />
+      <span className={styles.usernameBox}>
+        <span className={styles.username}>{username}</span>
+        <span className={styles.name}>{name}</span>
+      </span>
+      {following && (
+        <span
+          className={`${styles.followButton} ${styles.unFollowed}`}
+          onClick={() => props.handleFollowClick(id, following)}
+        >
+          {context.t("Following")}
+        </span>
+      )}
+      {!following && (
+        <span
+          className={`${styles.followButton}`}
+          onClick={() => props.handleFollowClick(id, following)}
+        >
+          {context.t("Follow")}
+        </span>
+      )}
     </div>
-  )
-}
+  );
+};
 
 RenderUsers.propTypes = {
   list: PropTypes.array
@@ -53,6 +88,10 @@ UserList.propTypes = {
 
 UserDisplay.contextTypes = {
   t: PropTypes.func.isRequired
-}
+};
+
+UserDisplay.propTypes = {
+  handleFollowClick: PropTypes.func.isRequired
+};
 
 export default UserList;
