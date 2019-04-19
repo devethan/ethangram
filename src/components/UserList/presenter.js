@@ -54,22 +54,12 @@ const UserDisplay = (props, context) => {
         <span className={styles.username}>{username}</span>
         <span className={styles.name}>{name}</span>
       </span>
-      {following && (
-        <span
-          className={`${styles.followButton} ${styles.unFollowed}`}
-          onClick={() => props.handleFollowClick(id, following)}
-        >
-          {context.t("Following")}
-        </span>
-      )}
-      {!following && (
-        <span
-          className={`${styles.followButton}`}
-          onClick={() => props.handleFollowClick(id, following)}
-        >
-          {context.t("Follow")}
-        </span>
-      )}
+      <span
+        className={following ? `${styles.button} ${styles.unFollowed}` : styles.button}
+        onClick={() => props.handleFollowClick(id, following)}
+      >
+        {following ? context.t("UnFollow") : context.t("Following")}
+      </span>
     </div>
   );
 };

@@ -121,7 +121,7 @@ function getPhotoLikes(photoId) {
     })
     .then(res => {
       if(res.status === 401) {
-        // dispatch(logout());
+        dispatch(logout());
       }
       return res.json();
     })
@@ -143,7 +143,7 @@ function followUser(userId) {
     })
     .then(res => {
       if(res.status === 401) {
-        // dispatch(logout())
+        dispatch(logout())
       } else if (!res.ok) {
         dispatch(setUnFollowUser(userId))
       }
@@ -154,7 +154,7 @@ function followUser(userId) {
 function unFollowUser(userId) {
   return (dispatch, getState) => {
     const {user:{token}} = getState();
-    dispatch(setFollowUser(userId))
+    dispatch(setUnFollowUser(userId))
     fetch(`${api}/users/${userId}/unfollow/`, {
       method: 'POST',
       headers: {
@@ -163,11 +163,30 @@ function unFollowUser(userId) {
     })
     .then(res => {
       if(res.status === 401) {
-        // dispatch(logout())
+        dispatch(logout())
       } else if (!res.ok) {
         dispatch(setFollowUser(userId))
       }
     })
+  }
+}
+
+function getExplore () {
+  return (dispatch, getState) => {
+    const { user: {token} } = getState();
+    fetch(`${api}/users/explore/`, {
+      method: 'GET',
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+    .then(res => {
+      if(res.status === 401) {
+        dispatch(logout())
+      }
+      return res.json()
+    })
+    .then(json => dispatch(setUserList(json)))
   }
 }
 
@@ -266,7 +285,8 @@ const actionCreators = {
   logout,
   getPhotoLikes,
   followUser,
-  unFollowUser
+  unFollowUser,
+  getExplore
 };
 
 export { actionCreators };

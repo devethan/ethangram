@@ -10,7 +10,6 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-    console.log(ownProps);
     return {
         handleFollowClick: (userId, following) => {
             if(following) {

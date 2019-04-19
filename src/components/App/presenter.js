@@ -6,6 +6,7 @@ import Navigation from 'components/Navigation';
 import Auth from 'components/Auth';
 import Footer from 'components/Footer';
 import Feed from 'components/Feed';
+import Explore from 'components/Explore';
 
 // Array type으로도 Component 표현 가능
 const App = props => [
@@ -22,7 +23,7 @@ App.propTypes = {
 const PrivateRoutes = props => (
   <Switch>
     <Route exact path="/" component={Feed} />
-    <Route path="/explore" render={()=>'explore'} />
+    <Route path="/explore" component={Explore} />
   </Switch>
 );
 
